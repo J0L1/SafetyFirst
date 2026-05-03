@@ -60,6 +60,8 @@ async function startGame() {
 /* BOARD */
 function initBoard() {
   document.getElementById("setup").style.display = "none";
+  document.getElementById("btnShowLeaderboard").style.display = "inline-block";
+  document.getElementById("btnClearState").style.display = "inline-block";
 
   const headline = document.getElementById("headline");
   headline.innerText = data.title;
@@ -238,7 +240,7 @@ function loadState() {
 }
 
 async function clearState() {
-  if(await confirmDialog("Wollen Sie wirklich das Spiel komplett zurücksetzen?")) {
+  if(await confirmDialog("Wollen Sie das Spiel komplett zurücksetzen?")) {
     localStorage.removeItem("safety_first_state");
     window.location.reload();
   }

@@ -10,6 +10,14 @@ let questionPlayer = null;
 let leftPoints = 0;
 let isTimerRunning = true;
 
+document.getElementById("btnAddPlayer").addEventListener("click", addPlayer);
+document.getElementById("btnStartGame").addEventListener("click", startGame);
+document.getElementById("btnRightAnswer").addEventListener("click", correct);
+document.getElementById("btnWrongAnswer").addEventListener("click", wrong);
+document.getElementById("btnEndQuestion").addEventListener("click", endQuestion);
+document.getElementById("btnShowLeaderboard").addEventListener("click", showLeaderboard);
+document.getElementById("btnClearState").addEventListener("click", clearState);
+
 loadState();
 
 /* SPIELER */
@@ -29,9 +37,9 @@ function renderPlayers() {
 }
 
 /* START */
-function startGame() {
+async function startGame() {
   if(players.length == 0){
-    return alert("Es muss mindestens ein Spieler hinzugefügt werden.");
+    return await alertDialog("Es muss mindestens ein Spieler hinzugefügt werden.");
   }
   const file = document.getElementById("jsonUpload").files[0];
 
@@ -45,7 +53,7 @@ function startGame() {
     reader.readAsText(file);
     return;
   } else {
-    return alert("Es muss ein Fragenset ausgewählt werden.");
+    return await alertDialog("Es muss ein Fragenset ausgewählt werden.");
   }
 }
 
@@ -121,16 +129,16 @@ function correct() {
   showAnswer();
 }
 
-function wrong() {
+async function wrong() {
   clearInterval(timerInterval);
   questionPlayer = (questionPlayer + 1) % players.length;
   document.getElementById("questionPlayer").innerText = "Frage für: " + players[questionPlayer].name;
   if(currentPlayer == questionPlayer) {
-    alert("Kein Spieler konnte die Frage korrekt beantworten!");
+    await alertDialog("Kein Spieler konnte die Frage korrekt beantworten!");
     leftPoints += currentQuestion.q.points;
     showAnswer();
   } else {
-    alert(players[questionPlayer].name + "darf die Frage beantworten!");
+    await alertDialog(players[questionPlayer].name + "darf die Frage beantworten!");
     startTimer();
   }
 }
@@ -162,7 +170,7 @@ function endQuestion() {
 }
 
 /* TIMER */
-function startTimer() {
+async function startTimer() {
   timeLeft = answerTime;
   document.getElementById("timer").innerText = "Zeit: " + timeLeft;
 
@@ -173,7 +181,7 @@ function startTimer() {
     document.getElementById("timer").innerText = "Zeit: " + timeLeft;
 
     if (timeLeft <= 0) {
-      alert("Die Zeit ist abgelaufen, der nächste Spieler ist dran!");
+      alertDialog("Die Zeit ist abgelaufen, der nächste Spieler ist dran!");
       wrong();
       clearInterval(timerInterval);
     }
@@ -191,7 +199,9 @@ function showLeaderboard() {
     "<h2>🏆 Leaderboard</h2>" +
     players.map(p => `${p.name}: ${p.score}`).join("<br>") +
     "<br>Restliche Punkte: " + leftPoints +
-    "<br><button onclick='closeLeaderboard()'>Schließen</button>";
+    "<br><button id='btnCloseLeaderboard'>Schließen</button>";
+
+  document.getElementById("btnCloseLeaderboard").addEventListener("click", closeLeaderboard);
 }
 
 function closeLeaderboard() {
@@ -227,8 +237,60 @@ function loadState() {
   initBoard();
 }
 
-/* SPEICHERN */
-function clearState() {
-  localStorage.removeItem("safety_first_state");
-  window.location.reload();
+async function clearState() {
+  if(await confirmDialog("Wollen Sie wirklich das Spiel komplett zurücksetzen?")) {
+    localStorage.removeItem("safety_first_state");
+    window.location.reload();
+  }
+}
+
+/* DIALOG */
+function alertDialog(message) {
+  return createDialog(message, [
+    { text: "OK", value: true }
+  ]);
+}
+
+function confirmDialog(message) {
+  return createDialog(message, [
+    { text: "Abbrechen", value: false },
+    { text: "OK", value: true }
+  ]);
+}
+
+function createDialog(message, buttons) {
+  return new Promise((resolve) => {
+    const root = document.getElementById("dialog-root");
+
+    const overlay = document.createElement("div");
+    overlay.className = "dialog-overlay";
+
+    const box = document.createElement("div");
+    box.className = "dialog-box";
+
+    const msg = document.createElement("div");
+    msg.className = "dialog-message";
+    msg.innerText = message;
+
+    const actions = document.createElement("div");
+    actions.className = "dialog-actions";
+
+    buttons.forEach(btn => {
+      const button = document.createElement("button");
+      button.innerText = btn.text;
+
+      button.onclick = () => {
+        document.body.removeChild(overlay);
+        resolve(btn.value);
+      };
+
+      actions.appendChild(button);
+    });
+
+    box.appendChild(msg);
+    box.appendChild(actions);
+    overlay.appendChild(box);
+
+    document.body.appendChild(overlay);
+  });
 }

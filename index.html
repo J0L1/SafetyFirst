@@ -14,7 +14,7 @@
 
 <div id="setup">
   <input id="playerName" placeholder="Spielername">
-  <button onclick="addPlayer()">Spieler hinzufügen</button>
+  <button id="btnAddPlayer">Spieler hinzufügen</button>
 
   <div id="players"></div>
 
@@ -22,7 +22,7 @@
   <input type="file" id="jsonUpload">
 
   <br><br>
-  <button class="question-btn" onclick="startGame()">Spiel starten</button>
+  <button class="question-btn" id="btnStartGame">Spiel starten</button>
 </div>
 
 <div id="board"></div>
@@ -38,19 +38,21 @@
 
     <br>
 
-    <button onclick="correct()" id="btnRightAnswer">Richtig beantwortet</button>
-    <button onclick="wrong()" id="btnWrongAnswer">Falsch beantwortet</button>
-    <button onclick="endQuestion()" id="btnEndQuestion">Frage beenden</button>
+    <button id="btnRightAnswer">Richtig beantwortet</button>
+    <button id="btnWrongAnswer">Falsch beantwortet</button>
+    <button id="btnEndQuestion">Frage beenden</button>
   </div>
 </div>
 
 <div id="board-buttons">
-  <button onclick="showLeaderboard()">Leaderboard anzeigen</button>
-  <button onclick="clearState()">Neues Spiel starten</button>
+  <button id="btnShowLeaderboard">Leaderboard anzeigen</button>
+  <button id="btnClearState">Neues Spiel starten</button>
 </div>
 
 <div id="leaderboard"></div>
 
-<script src="app.js"></script>
+<div id="dialog-root"></div>
+
+<script src="app.js" type="module"></script>
 </body>
 </html>

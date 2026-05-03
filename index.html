@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Safety First</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="./icon.png">
+</head>
+
+<body>
+
+<h1>🔥 Safety First</h1>
+<h2 id="headline"></h2>
+
+<div id="setup">
+  <input id="playerName" placeholder="Spielername">
+  <button onclick="addPlayer()">Spieler hinzufügen</button>
+
+  <div id="players"></div>
+
+  <h3>Fragenset auswählen:</h3>
+  <input type="file" id="jsonUpload">
+
+  <br><br>
+  <button class="question-btn" onclick="startGame()">Spiel starten</button>
+</div>
+
+<div id="board"></div>
+
+<div id="modal">
+  <div id="modal-content">
+    <div id="questionPlayer"></div>
+    <p id="timer"></p>
+    <h2 id="questionText"></h2>
+    <div id="media"></div>
+
+    <div id="answer"></div>
+
+    <br>
+
+    <button onclick="correct()" id="btnRightAnswer">Richtig beantwortet</button>
+    <button onclick="wrong()" id="btnWrongAnswer">Falsch beantwortet</button>
+    <button onclick="endQuestion()" id="btnEndQuestion">Frage beenden</button>
+  </div>
+</div>
+
+<div id="board-buttons">
+  <button onclick="showLeaderboard()">Leaderboard anzeigen</button>
+  <button onclick="clearState()">Neues Spiel starten</button>
+</div>
+
+<div id="leaderboard"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

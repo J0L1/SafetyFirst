@@ -193,14 +193,14 @@ async function startTimer() {
 /* LEADERBOARD */
 function showLeaderboard() {
   const lb = document.getElementById("leaderboard");
-  lb.style.display = "block";
+  lb.style.display = "flex";
 
   players.sort((a,b) => b.score - a.score);
 
-  lb.innerHTML =
+  document.getElementById("leaderboard-list").innerHTML =
     "<h2>🏆 Leaderboard</h2>" +
     players.map(p => `${p.name}: ${p.score}`).join("<br>") +
-    "<br>Restliche Punkte: " + leftPoints +
+    "<br>Restliche Punkte: " + leftPoints + "<br>" +
     "<br><button id='btnCloseLeaderboard'>Schließen</button>";
 
   document.getElementById("btnCloseLeaderboard").addEventListener("click", closeLeaderboard);

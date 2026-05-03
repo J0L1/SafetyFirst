@@ -5,8 +5,8 @@
   --blue-1: #27127c;
   --blue-2: #060144;
   --blue-3: #02001c;
-  --text-light: #c8e6c9;
-  --text-dark: #000000;
+  --text-light: white;
+  --text-dark: black;
 }
 
 body {
@@ -71,14 +71,15 @@ h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.6);
   display: none;
   justify-content: center;
   align-items: center;
 }
 
 #modal-content {
-  background: var(--blue-3);
+  background: var(--blue-2);
+  color: var(--text-light);
   padding: 25px;
   max-width: 80%;
   border-radius: 10px;
@@ -88,7 +89,7 @@ h1 {
   display: none;
   margin-top: 10px;
   font-size: 20px;
-  color: var(--text-light);
+  color: var(--orange-1);
 }
 
 #questionText {
@@ -107,15 +108,29 @@ button {
 }
 
 #leaderboard {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
   display: none;
-  padding: 20px;
-  font-size: 22px;
+  justify-content: center;
+  align-items: center;
+}
+
+#leaderboard-content {
+  background: var(--blue-2);
+  color: var(--text-light);
+  padding: 25px;
+  max-width: 80%;
+  border-radius: 10px;
 }
 
 .dialog-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
   color: var(--text-dark);
   display: flex;
   justify-content: center;

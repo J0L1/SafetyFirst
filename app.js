@@ -155,10 +155,11 @@ async function wrong() {
   document.getElementById("questionPlayer").innerText = "Frage für: " + players[questionPlayer].name;
   if(currentPlayer == questionPlayer) {
     await alertDialog("Kein Spieler konnte die Frage korrekt beantworten!");
+    document.getElementById("questionPlayer").innerText = "Punkte für: Restliche Punkte";
     leftPoints += currentQuestion.q.points;
     showAnswer();
   } else {
-    await alertDialog(players[questionPlayer].name + "darf die Frage beantworten!");
+    await alertDialog(players[questionPlayer].name + " darf die Frage beantworten!");
     startTimer();
   }
 }
@@ -169,6 +170,8 @@ function showAnswer(){
   document.getElementById("btnEndQuestion").style.display = "inline-block";
   document.getElementById("btnRightAnswer").style.display = "none";
   document.getElementById("btnWrongAnswer").style.display = "none";
+
+  document.getElementById("questionPlayer").innerText = "Punkte für: " + players[questionPlayer].name;
 
   usedQuestions[currentQuestion.key] = true;
   nextPlayer();
@@ -215,11 +218,12 @@ function showLeaderboard() {
 
   players.sort((a,b) => b.score - a.score);
 
+  let index = 1;
   document.getElementById("leaderboard-list").innerHTML =
-    "<h2>🏆 Leaderboard</h2><br>" +
-    players.map(p => `${p.name}: ${p.score}`).join("<br><br>") +
-    "<br><br>Restliche Punkte: " + leftPoints + "<br><br>" +
-    "<br><button id='btnCloseLeaderboard'>Schließen</button>";
+    "<h2>🏆 Leaderboard</h2>" +
+    players.map(p => `<div id="leaderboard-player-${index++}">${p.name}: ${p.score}</div>`).join("<br>") +
+    "<br>Restliche Punkte: " + leftPoints + "<br><br>" +
+    "<button id='btnCloseLeaderboard'>Schließen</button>";
 
   document.getElementById("btnCloseLeaderboard").addEventListener("click", closeLeaderboard);
 }

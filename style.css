@@ -5,7 +5,7 @@
   --blue-1: #27127c;
   --blue-2: #060144;
   --blue-3: #02001c;
-  --text-light: white;
+  --text-light: #eeeeee;
   --text-dark: black;
 }
 
@@ -82,6 +82,7 @@ h1 {
   color: var(--text-light);
   padding: 25px;
   max-width: 80%;
+  border: 10px solid var(--orange-3);
   border-radius: 10px;
 }
 
@@ -119,12 +120,47 @@ button {
   align-items: center;
 }
 
+#leaderboard.winner #leaderboard-content {
+  animation: glowGold 2s infinite alternate;
+}
+
+@keyframes glowGold {
+  0% {
+    box-shadow: 
+      0 0 5px #ffd700,
+      0 0 10px #ffd700,
+      0 0 20px #ffae00;
+    border: 2px solid rgba(255, 215, 0, 0.5);
+  }
+
+  50% {
+    box-shadow: 
+      0 0 10px #fff8dc,
+      0 0 25px #ffd700,
+      0 0 40px #ffae00;
+    border: 2px solid rgba(255, 215, 0, 1);
+  }
+
+  100% {
+    box-shadow: 
+      0 0 5px #ffd700,
+      0 0 15px #ffae00,
+      0 0 30px #ff8c00;
+    border: 2px solid rgba(255, 215, 0, 0.7);
+  }
+}
+
 #leaderboard-content {
   background: var(--blue-2);
   color: var(--text-light);
   padding: 25px;
   max-width: 80%;
+  border: 10px solid gold;
   border-radius: 10px;
+}
+
+#leaderboard-list {
+  color: gold;
 }
 
 .dialog-overlay {

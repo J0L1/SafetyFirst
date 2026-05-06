@@ -9,6 +9,8 @@ let timeLeft = 0;
 let questionPlayer = null;
 let leftPoints = 0;
 let isTimerRunning = true;
+let numberOfAllQuestions = 0;
+let numberOfUsedQuestions = 0;
 
 document.getElementById("btnAddPlayer").addEventListener("click", addPlayer);
 document.getElementById("btnStartGame").addEventListener("click", startGame);
@@ -62,7 +64,7 @@ function initBoard() {
   document.getElementById("setup").style.display = "none";
   document.getElementById("btnShowLeaderboard").style.display = "inline-block";
   document.getElementById("btnClearState").style.display = "inline-block";
-
+  
   const headline = document.getElementById("headline");
   headline.innerText = data.title;
 
@@ -81,6 +83,9 @@ function initBoard() {
 
   const maxQ = Math.max(...data.categories.map(c => c.questions.length));
 
+  numberOfAllQuestions = 0;
+  numberOfUsedQuestions = 0;
+
   for (let i = 0; i < maxQ; i++) {
     data.categories.forEach((category, ci) => {
       const q = category.questions[i];
@@ -94,13 +99,21 @@ function initBoard() {
 
         if (usedQuestions[key]) {
           btn.classList.add("used");
+          numberOfUsedQuestions++;
         }
 
         btn.onclick = () => openQuestion(q, btn, key);
       }
 
       board.appendChild(btn);
+      numberOfAllQuestions++;
     });
+  }
+
+  if(numberOfAllQuestions === numberOfUsedQuestions){
+    document.getElementById("leaderboard").classList.add("winner");
+  } else {
+    document.getElementById("leaderboard").classList.remove("winner");
   }
 }
 
@@ -110,6 +123,7 @@ function openQuestion(q, btn, key) {
 
   currentQuestion = { q, btn, key };
   btn.classList.add("used");
+  numberOfUsedQuestions ++;
 
   document.getElementById("btnEndQuestion").style.display = "none";
   document.getElementById("modal").style.display = "flex";
@@ -117,6 +131,10 @@ function openQuestion(q, btn, key) {
   isTimerRunning = true;
   document.getElementById("questionPlayer").innerText = "Frage für: " + players[questionPlayer].name;
   document.getElementById("questionText").innerText = "Frage: " + q.question;
+
+  if(numberOfAllQuestions === numberOfUsedQuestions) {
+    document.getElementById("leaderboard").classList.add("winner");
+  }
 
   const answerDiv = document.getElementById("answer");
   answerDiv.style.display = "none";
@@ -198,9 +216,9 @@ function showLeaderboard() {
   players.sort((a,b) => b.score - a.score);
 
   document.getElementById("leaderboard-list").innerHTML =
-    "<h2>🏆 Leaderboard</h2>" +
-    players.map(p => `${p.name}: ${p.score}`).join("<br>") +
-    "<br>Restliche Punkte: " + leftPoints + "<br>" +
+    "<h2>🏆 Leaderboard</h2><br>" +
+    players.map(p => `${p.name}: ${p.score}`).join("<br><br>") +
+    "<br><br>Restliche Punkte: " + leftPoints + "<br><br>" +
     "<br><button id='btnCloseLeaderboard'>Schließen</button>";
 
   document.getElementById("btnCloseLeaderboard").addEventListener("click", closeLeaderboard);

@@ -233,14 +233,14 @@ async function startTimer() {
   timeLeft = answerTime;
   document.getElementById("timer").innerText = "Zeit: " + timeLeft;
 
-  timerInterval = setInterval(() => {
+  timerInterval = setInterval(async () => {
     if(isTimerRunning){
       timeLeft--;
     }
     document.getElementById("timer").innerText = "Zeit: " + timeLeft;
 
     if (timeLeft <= 0) {
-      alertDialog("Die Zeit ist abgelaufen, der nächste Spieler ist dran!");
+      await alertDialog("Die Zeit ist abgelaufen, der nächste Spieler ist dran!");
       wrong();
       clearInterval(timerInterval);
     }

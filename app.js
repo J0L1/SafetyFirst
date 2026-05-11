@@ -20,6 +20,31 @@ document.getElementById("btnEndQuestion").addEventListener("click", endQuestion)
 document.getElementById("btnShowLeaderboard").addEventListener("click", showLeaderboard);
 document.getElementById("btnClearState").addEventListener("click", clearState);
 
+const input = document.getElementById("fileInput");
+let db;
+const request = indexedDB.open("mediaDB", 1);
+
+const currentPlayerOutput = document.getElementById("currentPlayer");
+
+request.onsuccess = function (e) {
+  const db = e.target.result;
+
+  // Prüfen ob Store existiert
+  if (!db.objectStoreNames.contains("files")) {
+    db.createObjectStore("files", { keyPath: "id", autoIncrement: true });
+  }
+}
+
+request.onupgradeneeded = function (e) {
+  db = e.target.result;
+  db.createObjectStore("files", { keyPath: "id", autoIncrement: true });
+};
+
+request.onsuccess = function (e) {
+  db = e.target.result;
+  loadFiles();
+};
+
 loadState();
 
 /* SPIELER */
@@ -59,6 +84,14 @@ async function startGame() {
   }
 }
 
+input.addEventListener("change", () => {
+  const files = input.files;
+
+  for (let file of files) {
+    saveFile(file);
+  }
+});
+
 /* BOARD */
 function initBoard() {
   document.getElementById("setup").style.display = "none";
@@ -67,6 +100,8 @@ function initBoard() {
   
   const headline = document.getElementById("headline");
   headline.innerText = data.title;
+
+  currentPlayerOutput.innerText = players[currentPlayer].name + " ist dran!";
 
   const board = document.getElementById("board");
   board.innerHTML = "";
@@ -180,6 +215,7 @@ function showAnswer(){
 
 function nextPlayer() {
   currentPlayer = (currentPlayer + 1) % players.length;
+  currentPlayerOutput.innerText = players[currentPlayer].name + " ist dran!";
 }
 
 function endQuestion() {
@@ -317,4 +353,44 @@ function createDialog(message, buttons) {
 
     document.body.appendChild(overlay);
   });
+}
+
+/* INDEX-DB */
+function saveFile(file) {
+  const tx = db.transaction("files", "readwrite");
+  const store = tx.objectStore("files");
+
+  store.add({ file: file });
+}
+
+function loadFiles() {
+  const tx = db.transaction("files", "readonly");
+  const store = tx.objectStore("files");
+
+  const request = store.getAll();
+
+  request.onsuccess = function () {
+    request.result.forEach(entry => {
+      renderFile(entry.file);
+    });
+  };
+}
+
+function renderFile(file) {
+  const url = URL.createObjectURL(file);
+
+  let element;
+
+  if (file.type.startsWith("image")) {
+    element = document.createElement("img");
+    element.src = url;
+    element.style.width = "200px";
+  } else {
+    element = document.createElement("video");
+    element.src = url;
+    element.controls = true;
+    element.style.width = "300px";
+  }
+
+  document.body.appendChild(element);
 }

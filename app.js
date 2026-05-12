@@ -97,6 +97,7 @@ function initBoard() {
   document.getElementById("setup").style.display = "none";
   document.getElementById("btnShowLeaderboard").style.display = "inline-block";
   document.getElementById("btnClearState").style.display = "inline-block";
+  document.getElementById("applicationTitle").style.display = "none";
   
   const headline = document.getElementById("headline");
   headline.innerText = data.title;

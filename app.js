@@ -67,6 +67,11 @@ function addPlayer() {
   const name = nameInput.value.trim();
   if (!name) return;
 
+  console.log(players);
+  if(players.some(player => player.name === name)){
+    return alertDialog("Die Spieler dürfen nicht den gleichen Namen haben.");
+  }
+
   players.push({ name, score: 0 });
   nameInput.value = "";
   renderPlayers();
@@ -79,8 +84,8 @@ function renderPlayers() {
 
 /* START */
 async function startGame() {
-  if(players.length == 0){
-    return await alertDialog("Es muss mindestens ein Spieler hinzugefügt werden.");
+  if(players.length < 2){
+    return await alertDialog("Es müssen mindestens zwei Spieler hinzugefügt werden.");
   }
   const file = document.getElementById("jsonUpload").files[0];
 

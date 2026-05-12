@@ -19,6 +19,11 @@ document.getElementById("btnWrongAnswer").addEventListener("click", wrong);
 document.getElementById("btnEndQuestion").addEventListener("click", endQuestion);
 document.getElementById("btnShowLeaderboard").addEventListener("click", showLeaderboard);
 document.getElementById("btnClearState").addEventListener("click", clearState);
+document.getElementById("playerName").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        addPlayer();
+    }
+});
 
 const input = document.getElementById("fileInput");
 let db;

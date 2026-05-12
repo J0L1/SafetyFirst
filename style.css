@@ -230,3 +230,59 @@ button {
   justify-content: flex-end;
   gap: 10px;
 }
+
+/* Simple Modern Inputs */
+input,
+select {
+  padding: 10px 14px;
+  border: 1px solid var(--text-light);
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: inherit;
+  background: var(--text-light);
+  color: var(--text-dark);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Focus */
+input[type="text"]:focus,
+select:focus,
+input[type="file"]:focus {
+  outline: none;
+  border-color: var(--blue-2);
+  box-shadow: 0 0 0 3px var(--blue-3);
+}
+
+/* Select */
+select {
+  cursor: pointer;
+}
+
+/* File Button */
+input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--blue-2);
+  color: var(--text-light);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+  opacity: 0.9;
+}
+
+.fileInputLabel {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--blue-2);
+  color: var(--text-light);
+}

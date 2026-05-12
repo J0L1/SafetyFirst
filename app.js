@@ -33,7 +33,8 @@ document.getElementById("theme-select").addEventListener("change", (e) => {
   );
 });
 
-const input = document.getElementById("fileInput");
+const jsonInput = document.getElementById("jsonUpload");
+const mediaInput = document.getElementById("mediaFileInput");
 let db;
 const request = indexedDB.open("mediaDB", 1);
 
@@ -55,7 +56,7 @@ request.onupgradeneeded = function (e) {
 
 request.onsuccess = function (e) {
   db = e.target.result;
-  // loadFiles();
+  loadFiles();
 };
 
 loadState();
@@ -84,6 +85,7 @@ async function startGame() {
   const file = document.getElementById("jsonUpload").files[0];
 
   if (file) {
+    console.log(file);
     const reader = new FileReader();
     reader.onload = e => {
       data = JSON.parse(e.target.result);
@@ -97,11 +99,17 @@ async function startGame() {
   }
 }
 
-input.addEventListener("change", () => {
-  const files = input.files;
+jsonInput.addEventListener("change", (e) => {
+  document.getElementById("jsonFile").innerHTML = "Ausgewählt: " + jsonInput.files[0].name + "<br>";
+});
+
+mediaInput.addEventListener("change", () => {
+  const files = mediaInput.files;
 
   for (let file of files) {
     saveFile(file);
+    document.getElementById("mediaFiles").innerHTML +=
+      file.name + "<br>";
   }
 });
 
@@ -385,18 +393,19 @@ function saveFile(file) {
   store.add({ file: file });
 }
 
-// function loadFiles() {
-//   const tx = db.transaction("files", "readonly");
-//   const store = tx.objectStore("files");
+function loadFiles() {
+  const tx = db.transaction("files", "readonly");
+  const store = tx.objectStore("files");
 
-//   const request = store.getAll();
+  const request = store.getAll();
 
-//   request.onsuccess = function () {
-//     request.result.forEach(entry => {
-//       renderFile(entry.file);
-//     });
-//   };
-// }
+  request.onsuccess = function () {
+    request.result.forEach(entry => {
+      document.getElementById("mediaFiles").innerHTML +=
+        entry.file.name + "<br>";
+    });
+  };
+}
 
 function getFileElement(filename, mediaDiv) {
   const tx = db.transaction("files", "readonly");

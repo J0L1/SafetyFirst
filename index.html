@@ -27,16 +27,29 @@
   <input id="playerName" placeholder="Spielername">
   <button id="btnAddPlayer">Spieler hinzufügen</button>
 
+  <br>
+
   <div id="players"></div>
 
-  <h3>Fragenset auswählen:</h3>
-  <input type="file" id="jsonUpload">
+  <br>
 
-  <h3>Ggf. Medien auswählen:</h3>
-  <input type="file" id="fileInput" multiple accept="image/*,video/*">
-  <div id="preview"></div>
+  <div>
+    <label for="jsonUpload" class="fileInputLabel">📁 Fragenset auswählen</label>
+    <input type="file" id="jsonUpload" accept="application/json" hidden>
+    <br><br>
+    <div id="jsonFile"></div>
+  </div>
 
-  <br><br>
+  <br>
+
+  <div>
+    <label for="mediaFileInput" class="fileInputLabel">📁 Ggf. Medien auswählen</label>
+    <input type="file" id="mediaFileInput" multiple accept="image/*,video/*" hidden>
+    <br><br>
+    <div id="mediaFiles"></div>
+  </div>
+
+  <br>
   <button class="question-btn" id="btnStartGame">Spiel starten</button>
 </div>
 

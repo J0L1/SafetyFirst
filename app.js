@@ -11,6 +11,7 @@ let leftPoints = 0;
 let isTimerRunning = true;
 let numberOfAllQuestions = 0;
 let numberOfUsedQuestions = 0;
+let theme = "";
 
 document.getElementById("btnAddPlayer").addEventListener("click", addPlayer);
 document.getElementById("btnStartGame").addEventListener("click", startGame);
@@ -23,6 +24,13 @@ document.getElementById("playerName").addEventListener("keydown", function(event
     if (event.key === "Enter") {
         addPlayer();
     }
+});
+document.getElementById("theme-select").addEventListener("change", (e) => {
+  theme = e.target.value;
+  document.documentElement.setAttribute(
+    "data-theme",
+    e.target.value
+  );
 });
 
 const input = document.getElementById("fileInput");
@@ -103,6 +111,7 @@ function initBoard() {
   document.getElementById("btnShowLeaderboard").style.display = "inline-block";
   document.getElementById("btnClearState").style.display = "inline-block";
   document.getElementById("applicationTitle").style.display = "none";
+    document.documentElement.setAttribute("data-theme", theme);
   
   const headline = document.getElementById("headline");
   headline.innerText = data.title;
@@ -287,7 +296,8 @@ function saveState() {
     data,
     usedQuestions,
     leftPoints,
-    answerTime
+    answerTime,
+    theme
   };
   localStorage.setItem("safety_first_state", JSON.stringify(state));
 }
@@ -304,6 +314,7 @@ function loadState() {
   usedQuestions = state.usedQuestions || {};
   leftPoints = state.leftPoints;
   answerTime = state.answerTime;
+  theme = state.theme;
 
   initBoard();
 }

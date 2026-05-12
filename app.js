@@ -42,7 +42,7 @@ request.onupgradeneeded = function (e) {
 
 request.onsuccess = function (e) {
   db = e.target.result;
-  loadFiles();
+  // loadFiles();
 };
 
 loadState();
@@ -171,6 +171,10 @@ function openQuestion(q, btn, key) {
     document.getElementById("leaderboard").classList.add("winner");
   }
 
+  if(q.media != undefined) {
+    const element = getFileElement(q.media, document.getElementById("media"));
+  }
+
   const answerDiv = document.getElementById("answer");
   answerDiv.style.display = "none";
   answerDiv.innerText = "Antwort: " + q.answer;
@@ -205,6 +209,7 @@ function showAnswer(){
   document.getElementById("btnEndQuestion").style.display = "inline-block";
   document.getElementById("btnRightAnswer").style.display = "none";
   document.getElementById("btnWrongAnswer").style.display = "none";
+  document.getElementById("media").innerHTML = "";
 
   document.getElementById("questionPlayer").innerText = "Punkte für: " + players[questionPlayer].name;
 
@@ -363,7 +368,20 @@ function saveFile(file) {
   store.add({ file: file });
 }
 
-function loadFiles() {
+// function loadFiles() {
+//   const tx = db.transaction("files", "readonly");
+//   const store = tx.objectStore("files");
+
+//   const request = store.getAll();
+
+//   request.onsuccess = function () {
+//     request.result.forEach(entry => {
+//       renderFile(entry.file);
+//     });
+//   };
+// }
+
+function getFileElement(filename, mediaDiv) {
   const tx = db.transaction("files", "readonly");
   const store = tx.objectStore("files");
 
@@ -371,12 +389,14 @@ function loadFiles() {
 
   request.onsuccess = function () {
     request.result.forEach(entry => {
-      renderFile(entry.file);
+      if(entry.file.name == filename) {
+        mediaDiv.appendChild(getRenderedFile(entry.file));
+      }
     });
   };
 }
 
-function renderFile(file) {
+function getRenderedFile(file) {
   const url = URL.createObjectURL(file);
 
   let element;
@@ -384,13 +404,14 @@ function renderFile(file) {
   if (file.type.startsWith("image")) {
     element = document.createElement("img");
     element.src = url;
-    element.style.width = "200px";
+    element.style.height = "60vh";
   } else {
     element = document.createElement("video");
     element.src = url;
     element.controls = true;
-    element.style.width = "300px";
+    element.autoplay = true;
+    element.style.height = "60vh";
   }
 
-  document.body.appendChild(element);
+  return element;
 }

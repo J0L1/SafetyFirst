@@ -273,9 +273,9 @@ async function startTimer() {
     document.getElementById("timer").innerText = "Zeit: " + timeLeft;
 
     if (timeLeft <= 0) {
+      clearInterval(timerInterval);
       await alertDialog("Die Zeit ist abgelaufen, der nächste Spieler ist dran!");
       wrong();
-      clearInterval(timerInterval);
     }
   }, 1000);
 }

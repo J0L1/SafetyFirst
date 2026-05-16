@@ -222,9 +222,9 @@ async function wrong() {
   document.getElementById("questionPlayer").innerText = "Frage für: " + players[questionPlayer].name;
   if(currentPlayer == questionPlayer) {
     await alertDialog("Kein Spieler konnte die Frage korrekt beantworten!");
-    document.getElementById("questionPlayer").innerText = "Punkte für: Restliche Punkte";
     leftPoints += currentQuestion.q.points;
     showAnswer();
+    document.getElementById("questionPlayer").innerText = "Punkte für: Restliche Punkte";
   } else {
     await alertDialog(players[questionPlayer].name + " darf die Frage beantworten!");
     startTimer();
@@ -285,12 +285,13 @@ function showLeaderboard() {
   const lb = document.getElementById("leaderboard");
   lb.style.display = "flex";
 
-  players.sort((a,b) => b.score - a.score);
+  let playersForLeaderboard = [ ...players ];
+  playersForLeaderboard.sort((a,b) => b.score - a.score);
 
   let index = 1;
   document.getElementById("leaderboard-list").innerHTML =
     "<h2>🏆 Leaderboard</h2>" +
-    players.map(p => `<div id="leaderboard-player-${index++}">${p.name}: ${p.score}</div>`).join("<br>") +
+    playersForLeaderboard.map(p => `<div id="leaderboard-player-${index++}">${p.name}: ${p.score}</div>`).join("<br>") +
     "<br>Restliche Punkte: " + leftPoints + "<br><br>" +
     "<button id='btnCloseLeaderboard'>Schließen</button>";
 

@@ -42,6 +42,17 @@
   --blue-3: #052e16;
 }
 
+/* Theme 3 */
+[data-theme="contrast-teal"] {
+--orange-1: #fb923c;
+--orange-2: #ffd54f;
+--orange-3: #ff8a65;
+
+--blue-1: #005a4f;
+--blue-2: #00312b;
+--blue-3: #061829;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: radial-gradient(circle, var(--blue-1), var(--blue-3));

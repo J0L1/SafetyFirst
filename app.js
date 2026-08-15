@@ -82,6 +82,26 @@ function addPlayer() {
 function renderPlayers() {
   document.getElementById("players").innerHTML =
     players.map(p => p.name).join("<br>");
+  document.getElementById("players").innerHTML += "<br>";
+}
+
+function renderMedia(mediaArray) {
+    if(mediaArray.length > 0) {
+      document.getElementById("mediaFiles").innerHTML = "Medien:<br>";
+    }
+    mediaArray.forEach(entry => {
+      document.getElementById("mediaFiles").innerHTML +=
+        entry.file.name + "<br>";
+    });
+    if(mediaArray.length > 0) {
+      const button = document.createElement("button");
+      button.innerText = "Alle Medien löschen";
+
+      button.onclick = () => {
+        clearAllMediaFiles();
+      };
+      document.getElementById("mediaFiles").appendChild(button);
+    }
 }
 
 /* START */
@@ -102,23 +122,22 @@ async function startGame() {
     reader.readAsText(file);
     return;
   } else {
-    return await alertDialog("Es muss ein Fragenset ausgewählt werden.");
+    return await alertDialog("Es muss ein Fragensatz ausgewählt werden.");
   }
 }
 
 jsonInput.addEventListener("change", (e) => {
-  document.getElementById("jsonFile").innerHTML = "Ausgewählt: " + jsonInput.files[0].name + "<br>";
+  document.getElementById("jsonFile").innerHTML = "Fragensatz: " + jsonInput.files[0].name + "<br>";
 });
 
 mediaInput.addEventListener("change", () => {
   const files = mediaInput.files;
-  document.getElementById("mediaFiles").innerHTML = "Medien:<br>";
-
+  
   for (let file of files) {
     saveFile(file);
-    document.getElementById("mediaFiles").innerHTML +=
-      file.name + "<br>";
   }
+
+  loadFiles();
 });
 
 /* BOARD */
@@ -423,12 +442,16 @@ function loadFiles() {
   const request = store.getAll();
 
   request.onsuccess = function () {
-    document.getElementById("mediaFiles").innerHTML = "Medien:<br>";
-    request.result.forEach(entry => {
-      document.getElementById("mediaFiles").innerHTML +=
-        entry.file.name + "<br>";
-    });
+    renderMedia(request.result);
   };
+}
+
+function clearAllMediaFiles() {
+  const tx = db.transaction("files", "readwrite");
+  const store = tx.objectStore("files");
+
+  const request = store.clear();
+  document.getElementById("mediaFiles").innerHTML = "";
 }
 
 function getFileElement(filename, mediaDiv) {

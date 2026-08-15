@@ -20,6 +20,8 @@ document.getElementById("btnWrongAnswer").addEventListener("click", wrong);
 document.getElementById("btnEndQuestion").addEventListener("click", endQuestion);
 document.getElementById("btnShowLeaderboard").addEventListener("click", showLeaderboard);
 document.getElementById("btnClearState").addEventListener("click", clearState);
+document.getElementById("btnDownloadConfig").addEventListener("click", downloadConfig);
+document.getElementById("btnDownloadManual").addEventListener("click", downloadManual);
 document.getElementById("playerName").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         addPlayer();
@@ -110,6 +112,7 @@ jsonInput.addEventListener("change", (e) => {
 
 mediaInput.addEventListener("change", () => {
   const files = mediaInput.files;
+  document.getElementById("mediaFiles").innerHTML = "Medien:<br>";
 
   for (let file of files) {
     saveFile(file);
@@ -391,6 +394,20 @@ function createDialog(message, buttons) {
   });
 }
 
+function downloadConfig() {
+    const link = document.createElement("a");
+    link.href = "questions_leer.json";
+    link.download = "questions_leer.json";
+    link.click();
+}
+
+function downloadManual() {
+    const link = document.createElement("a");
+    link.href = "benutzerhandbuch.pdf";
+    link.download = "benutzerhandbuch.pdf";
+    link.click();
+}
+
 /* INDEX-DB */
 function saveFile(file) {
   const tx = db.transaction("files", "readwrite");
@@ -406,6 +423,7 @@ function loadFiles() {
   const request = store.getAll();
 
   request.onsuccess = function () {
+    document.getElementById("mediaFiles").innerHTML = "Medien:<br>";
     request.result.forEach(entry => {
       document.getElementById("mediaFiles").innerHTML +=
         entry.file.name + "<br>";

@@ -69,6 +69,18 @@ h1 {
   text-shadow: 0 0 20px var(--orange-2);
 }
 
+.center-div {
+  display: flex;
+  justify-content: center;
+}
+
+.first-time {
+  background-color: var(--blue-1);
+  width: fit-content;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 #board {
   display: grid;
   gap: 10px;

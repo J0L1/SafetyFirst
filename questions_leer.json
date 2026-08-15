@@ -1,0 +1,185 @@
+{
+    "title": "Mein Quizz",
+    "categories": [
+        {
+            "name": "Kategorie 1",
+            "questions": [
+                {
+                    "points": 100,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 200,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 300,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 400,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 500,
+                    "question": "",
+                    "answer": ""
+                }
+            ]
+        },
+        {
+            "name": "Kategorie 2",
+            "questions": [
+                {
+                    "points": 100,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 200,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 300,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 400,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 500,
+                    "question": "",
+                    "answer": ""
+                }
+            ]
+        },
+        {
+            "name": "Kategorie 3",
+            "questions": [
+                {
+                    "points": 100,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 200,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 300,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 400,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 500,
+                    "question": "",
+                    "answer": ""
+                }
+            ]
+        },
+        {
+            "name": "Kategorie 4",
+            "questions": [
+                {
+                    "points": 100,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 200,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 300,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 400,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 500,
+                    "question": "",
+                    "answer": ""
+                }
+            ]
+        },
+        {
+            "name": "Kategorie 5",
+            "questions": [
+                {
+                    "points": 100,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 200,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 300,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 400,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 500,
+                    "question": "",
+                    "answer": ""
+                }
+            ]
+        },
+        {
+            "name": "Kategorie 6",
+            "questions": [
+                {
+                    "points": 100,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 200,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 300,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 400,
+                    "question": "",
+                    "answer": ""
+                },
+                {
+                    "points": 500,
+                    "question": "",
+                    "answer": ""
+                }
+            ]
+        }
+    ]
+}
